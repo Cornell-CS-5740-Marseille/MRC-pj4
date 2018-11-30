@@ -55,9 +55,10 @@ class Preprocessing:
         self.articles = []
         self.lower = lower
 
-    def load_file(self, path):
+    def load_file(self, path, is_test):
         start_time = time.time()
 
+        count_total = 0
         count_possible = 0
         count_impossible = 0
         with open(path, 'r') as f:
@@ -73,24 +74,26 @@ class Preprocessing:
                         new_question = Question()
                         new_question.question = question['question'] if not self.lower else question['question'].lower()
                         new_question.id = question['id']
-                        new_question.possible = question['is_impossible'] is False
                         new_question.parse_questions()
-                        if new_question.possible:
-                            count_possible = count_possible + 1
-                        else:
-                            count_impossible = count_impossible + 1
-                        for answer in question['answers']:
-                            new_answer = Answer()
-                            new_answer.text = answer['text'] if not self.lower else answer['text'].lower()
-                            new_answer.answer_start = answer['answer_start']
-                            new_question.answers.append(new_answer)
+                        count_total = count_total + 1
+                        if not is_test:
+                            new_question.possible = question['is_impossible'] is False
+                            if new_question.possible:
+                                count_possible = count_possible + 1
+                            else:
+                                count_impossible = count_impossible + 1
+                            for answer in question['answers']:
+                                new_answer = Answer()
+                                new_answer.text = answer['text'] if not self.lower else answer['text'].lower()
+                                new_answer.answer_start = answer['answer_start']
+                                new_question.answers.append(new_answer)
                         new_paragraph.questions.append(new_question)
                     new_article.paragraphs.append(new_paragraph)
                 self.articles.append(new_article)
 
         end_time = time.time()
         print('pre-processing time:', end_time - start_time)
-        print('possible:', count_possible, 'impossible:', count_impossible)
+        print('total:', count_total, 'possible:', count_possible, 'impossible:', count_impossible)
 
 
 if __name__ == "__main__":
