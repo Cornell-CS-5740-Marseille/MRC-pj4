@@ -18,12 +18,14 @@ class Paragraph:
         self.context = ''
         self.sentences = []
         self.questions = []
+        self.words = []
 
     def convert_to_lower(self):
         self.context = self.context.lower()
         return self
 
     def parse_sentences(self):
+        self.words = self.context.split(" ")
         self.sentences = re.split('\. |; |\."|! |\? ', self.context)
         for i in range(len(self.sentences)):
             self.sentences[i] = self.sentences[i].split(' ')
@@ -53,6 +55,7 @@ class Answer:
 class Preprocessing:
     def __init__(self, lower):
         self.articles = []
+        self.context_words = []
         self.lower = lower
 
     def load_file(self, path):
@@ -69,6 +72,7 @@ class Preprocessing:
                     new_paragraph = Paragraph()
                     new_paragraph.context = paragraph['context'] if not self.lower else paragraph['context'].lower()
                     new_paragraph.parse_sentences()
+                    self.context_words.append(new_paragraph.words)
                     for question in paragraph['qas']:
                         new_question = Question()
                         new_question.question = question['question'] if not self.lower else question['question'].lower()

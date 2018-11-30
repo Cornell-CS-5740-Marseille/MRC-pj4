@@ -1,8 +1,8 @@
 class Params(object):
-    batch_size = 32
-    max_context_words = 400
-    max_question_words = 30
-    word_vocab_size = 10000
+    batch_size = 100
+    max_context_words = 10
+    max_question_words = 5
+    word_vocab_size = 100
     char_vocab_size = 26
     word_emb_dim = 300
     char_emb_dim = 200
@@ -14,5 +14,6 @@ class Params(object):
     beta2 = 0.999
     lr = 0.001
     num_epochs = 10
-    num_samples = 500
+    num_samples = 10
     logdir = "train"
+    training_set = "../data/training.json"

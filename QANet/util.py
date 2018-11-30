@@ -1,6 +1,7 @@
 import tensorflow as tf
 import numpy as np
 from QANet.params import Params as param
+from prep import Preprocessing
 
 
 def get_one_hot(targets, nb_classes):
@@ -10,12 +11,12 @@ def get_one_hot(targets, nb_classes):
     return np.eye(nb_classes)[np.array(targets).reshape(-1)]
 
 
-def get_batch_data():
-    '''
-    Generates dummy input data to test architecture pipeline and training execution
-    '''
-    # generate random data for context and words
+def get_batch_data(filename):
+    prep = Preprocessing(True)
+    prep.load_file(filename)
+
     # inputs
+    context_words = prep.context_words
     x_c_w = np.random.randint(low=0, high=param.word_vocab_size, size=(param.num_samples, param.max_context_words))
     x_c_c = np.random.randint(low=0, high=param.char_vocab_size,
                               size=(param.num_samples, param.max_context_words, param.max_chars))
@@ -51,20 +52,14 @@ def get_batch_data():
     return x_c_w, x_c_c, x_q_w, x_q_c, y
 
 
-def embedding(inputs, shape=None, scope="word_embedding", reuse=None):
-    '''
-    Defines an embedding layer
-    '''
-    with tf.variable_scope(scope, reuse=reuse):
-        # create and initialize an embedding matrix (lookup table) of shape [vocab_size, emb_dims]
-        # if called with reuse=None, a new embedding matrix is created
-        # if called with resus=True the existing embedding matrix present in the scope will be reused
+def embedding(inputs, shape=None, scope="word_embedding"):
+    with tf.variable_scope(scope):
+        # create and initialize an embedding matrix of shape [vocab_size, emb_dims]
         emb_matrix = tf.get_variable("word_emb_matrix", dtype=tf.float32, shape=shape,
                                      initializer=tf.contrib.layers.xavier_initializer())
         # get the embeddings for input sequence of indices
-        # [..., N] -> [..., N, d] where N is the index sequence length and d is the embedding dimension
-        outputs = tf.nn.embedding_lookup(emb_matrix, inputs)
-        return outputs
+        inputs_emb = tf.nn.embedding_lookup(emb_matrix, inputs)
+        return inputs_emb
 
 
 def highway_layer(inputs, use_bias, transform_bias=-1.0, scope="highway_layer", reuse=None):
@@ -170,8 +165,8 @@ def multi_head_attention(queries, keys, values, num_heads=8, scope="multi_head_a
         # project using different learned linear projections
         # dimensions=[h, B, N, d/h]
         Q_s = [tf.layers.dense(q, dims, activation=tf.nn.relu) for q in Q_s]
-        K_s = [tf.layers.dense(q, dims, activation=tf.nn.relu) for k in K_s]
-        V_s = [tf.layers.dense(q, dims, activation=tf.nn.relu) for v in V_s]
+        K_s = [tf.layers.dense(k, dims, activation=tf.nn.relu) for k in K_s]
+        V_s = [tf.layers.dense(v, dims, activation=tf.nn.relu) for v in V_s]
         # concatenate different projections for parallel scaled dot product attention
         # dimensions=[h*B, N, d/h]
         Q_c = tf.concat(Q_s, axis=0)
