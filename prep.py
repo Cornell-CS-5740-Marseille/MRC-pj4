@@ -55,8 +55,10 @@ class Answer:
 class Preprocessing:
     def __init__(self, lower):
         self.articles = []
+        self.dictionary = {}
         self.context_words = []
         self.lower = lower
+        self.dict_index = 0
 
     def load_file(self, path):
         start_time = time.time()
@@ -72,6 +74,7 @@ class Preprocessing:
                     new_paragraph = Paragraph()
                     new_paragraph.context = paragraph['context'] if not self.lower else paragraph['context'].lower()
                     new_paragraph.parse_sentences()
+                    self.update_dict(new_paragraph.words)
                     self.context_words.append(new_paragraph.words)
                     for question in paragraph['qas']:
                         new_question = Question()
@@ -79,6 +82,9 @@ class Preprocessing:
                         new_question.id = question['id']
                         new_question.possible = question['is_impossible'] is False
                         new_question.parse_questions()
+
+                        self.update_dict(new_question.words)
+
                         if new_question.possible:
                             count_possible = count_possible + 1
                         else:
@@ -88,6 +94,7 @@ class Preprocessing:
                             new_answer.text = answer['text'] if not self.lower else answer['text'].lower()
                             new_answer.answer_start = answer['answer_start']
                             new_question.answers.append(new_answer)
+
                         new_paragraph.questions.append(new_question)
                     new_article.paragraphs.append(new_paragraph)
                 self.articles.append(new_article)
@@ -95,6 +102,15 @@ class Preprocessing:
         end_time = time.time()
         print('pre-processing time:', end_time - start_time)
         print('possible:', count_possible, 'impossible:', count_impossible)
+
+    def update_dict(self, sentence):
+        for word in sentence:
+            if not (word in self.dictionary):
+                self.dictionary[word] = self.dict_index
+                self.dict_index = self.dict_index + 1
+
+    def word_ids(self, sentence):
+        return list(map(lambda x: self.dictionary[x], sentence))
 
 
 if __name__ == "__main__":
