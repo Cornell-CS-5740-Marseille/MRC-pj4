@@ -78,7 +78,7 @@ if __name__ == "__main__":
     try:
         path_to_predictions = sys.argv[2]
     except:
-        path_to_predictions = os.path.join(os.getcwd(), "data/sample.json")
+        path_to_predictions = os.path.join(os.getcwd(), "output/output_baseline1.json")
 
     # determine paths/names
     current_loc = os.getcwd()
