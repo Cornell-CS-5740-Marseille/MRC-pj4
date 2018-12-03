@@ -42,8 +42,28 @@ class Baseline2: #bigram
                     final_prob = prob/count
                     if final_prob < 0.192 and not question.possible or final_prob >= 0.192 and question.possible:
                         correct = correct + 1
-
         return correct
+
+
+    def check_same_word_csv(self, articles):
+        with open('output/output_baseline2.csv', 'w') as outfile:
+            speech_writer = csv.writer(outfile, delimiter=',', quotechar='"',
+                                       quoting=csv.QUOTE_MINIMAL)
+            speech_writer.writerow(['Id', 'Predicted'])
+            for article in articles:
+                for paragraph in article.paragraphs:
+                    for question in paragraph.questions:
+                        prob = 0
+                        count = 0
+                        for sentence in paragraph.sentences:
+                            prob = prob + 1.0 * len(set(question.words).intersection(sentence)) / len(question.words)
+                            count = count + 1
+                        final_prob = prob / count
+                        if final_prob < 0.192 and not question.possible or final_prob >= 0.192 and question.possible:
+                            speech_writer.writerow([question.id, 1])
+                        else:
+                            speech_writer.writerow([question.id, 0])
+
 
 if __name__ == "__main__":
     my_prep = prep.Preprocessing(True)
@@ -51,5 +71,5 @@ if __name__ == "__main__":
     model = Baseline2(my_prep.articles)
     model.train()
     my_prep_test = prep.Preprocessing(True)
-    my_prep_test.load_file('data/development.json', False)  # True: testing; False: training
-    print(model.check(my_prep_test.articles)/69596)
+    my_prep_test.load_file('data/testing.json', True)  # True: testing; False: training
+    model.check_same_word_csv(my_prep_test.articles)
