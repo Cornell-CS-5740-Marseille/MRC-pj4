@@ -3,74 +3,155 @@ import csv
 import json
 
 class Baseline4:
-    def __init__(self, articles, NER):
+    def __init__(self, articles, NER_text, NER_tag):
         self.articles = articles
-        self.NER = NER
-        self.threshold = 0.2
+        self.NER_text = NER_text
+        self.NER_tag = NER_tag
+        self.threshold_NER = 0.1
+        self.threshold_SIM = 0.1
 
     def check_same_word(self):
         correct = 0
-        count = 1
+        count = 0
+        tmp = 0
+        question_sum = 0
         for article in self.articles:
             for paragraph in article.paragraphs:
                 for question in paragraph.questions:
                     found = False
+                    tmp = count
                     for sentence in paragraph.sentences:
                         # print(set(question.words).intersection(sentence))
                         # print(sentence)
                         # print(question.words)
                         # print(len(set(question.words).intersection(sentence)), len(question.words))
                         # print(question.words)
-                        if count > len(NER)-1:
-                            return correct,count
-                        if NER[count][0] != '1':
-                            count = count + 1
-                            continue
-                        print(NER[count])
-                        if ('country' or 'city' or 'state' in question.words) and ('GPE' in self.NER[count]) and \
-                                (1.0*len(set(question.words).intersection(sentence))/len(question.words) >= self.threshold and question.possible):
+                        # print(NER[count])
+                        if ('country' or 'city' or 'state' in question.words) and ('GPE' in self.NER_tag[tmp]) and \
+                                (1.0 * len(set(question.words).intersection(sentence)) / len(
+                                    question.words) >= self.threshold_NER) and NER_text[
+                            NER_tag[tmp].index('GPE')] not in question.words and question.possible:
+                            tmp = tmp + 1
                             correct = correct + 1
-                            count = count + 1
                             found = True
                             break
-                        elif ('who' in question.words) and ('PERSON' in self.NER[count]) and \
-                                (1.0 * len(set(question.words).intersection(sentence)) / len(question.words) >= self.threshold and question.possible):
+                        elif ('who' in question.words) and ('PERSON' in self.NER_tag[tmp]) and \
+                                (1.0 * len(set(question.words).intersection(sentence)) / len(
+                                    question.words) >= self.threshold_NER and NER_text[
+                                     NER_tag[tmp].index('PERSON')] not in question.words) and question.possible:
+                            tmp = tmp + 1
                             correct = correct + 1
-                            count = count + 1
                             found = True
                             break
-                        elif ('where' in question.words) and ('LOC' or 'GPE' or 'FAC' in self.NER[count]) and \
-                                (1.0 * len(set(question.words).intersection(sentence)) / len(question.words) >= self.threshold and question.possible):
+                        elif ('where' in question.words) and ('LOC' in self.NER_tag[tmp]) and \
+                                (1.0 * len(set(question.words).intersection(sentence)) / len(
+                                    question.words) >= self.threshold_NER) and \
+                                (NER_text[NER_tag[tmp].index('LOC')] not in question.words) and question.possible:
+                            tmp = tmp + 1
                             correct = correct + 1
-                            count = count + 1
                             found = True
                             break
-                        elif ('data' or 'time' in question.words) and ('DATE' or 'TIME' in self.NER[count]) and \
-                                (1.0 * len(set(question.words).intersection(sentence)) / len(question.words) >= self.threshold and question.possible):
+                        elif ('where' in question.words) and ('GPE' in self.NER_tag[tmp]) and \
+                                (1.0 * len(set(question.words).intersection(sentence)) / len(
+                                    question.words) >= self.threshold_NER) and \
+                                (NER_text[NER_tag[tmp].index('GPE')] not in question.words) and question.possible:
+                            tmp = tmp + 1
                             correct = correct + 1
-                            count = count + 1
                             found = True
                             break
-                        elif 1.0*len(set(question.words).intersection(sentence))/len(question.words) >= self.threshold and question.possible:
+                        elif ('where' in question.words) and ('FAC' in self.NER_tag[tmp]) and \
+                                (1.0 * len(set(question.words).intersection(sentence)) / len(
+                                    question.words) >= self.threshold_NER) and \
+                                (NER_text[NER_tag[tmp].index('FAC')] not in question.words) and question.possible:
+                            tmp = tmp + 1
                             correct = correct + 1
-                            count = count + 2
+                            found = True
+                            break
+                        elif ('when' or 'date' or 'time' in question.words) and ('DATE' in self.NER_tag[tmp]) and \
+                                (1.0 * len(set(question.words).intersection(sentence)) / len(
+                                    question.words) >= self.threshold_NER) and \
+                                (NER_text[NER_tag[tmp].index('DATE')] not in question.words) and question.possible:
+                            tmp = tmp + 1
+                            correct = correct + 1
+                            found = True
+                            break
+                        elif ('when' or 'date' or 'time' in question.words) and ('TIME' in self.NER_tag[tmp]) and \
+                                (1.0 * len(set(question.words).intersection(sentence)) / len(
+                                    question.words) >= self.threshold_NER) and \
+                                (NER_text[NER_tag[tmp].index('TIME')] not in question.words) and question.possible:
+                            tmp = tmp + 1
+                            correct = correct + 1
+                            found = True
+                            break
+                        elif ('how' and 'many' in question.words) and ('CARDINAL' in self.NER_tag[tmp]) and \
+                                (1.0 * len(set(question.words).intersection(sentence)) / len(
+                                    question.words) >= self.threshold_NER) and \
+                                (NER_text[NER_tag[tmp].index('CARDINAL')] not in question.words) and question.possible:
+                            tmp = tmp + 1
+                            correct = correct + 1
+                            found = True
+                            break
+                        elif ('how' and 'many' in question.words) and ('QUANTITY' in self.NER_tag[tmp]) and \
+                                (1.0 * len(set(question.words).intersection(sentence)) / len(
+                                    question.words) >= self.threshold_NER) and \
+                                (NER_text[NER_tag[tmp].index('QUANTITY')] not in question.words) and question.possible:
+                            tmp = tmp + 1
+                            correct = correct + 1
+                            found = True
+                            break
+                        elif ('how' and 'much' in question.words) and ('MONEY' in self.NER_tag[tmp]) and \
+                                (1.0 * len(set(question.words).intersection(sentence)) / len(
+                                    question.words) >= self.threshold_NER) and NER_text[
+                            NER_tag[tmp].index('MONEY')] not in question.words and question.possible:
+                            tmp = tmp + 1
+                            correct = correct + 1
+                            found = True
+                            break
+                        elif ('per' in question.words) and ('PERCENT' in self.NER_tag[tmp]) and \
+                                (1.0 * len(set(question.words).intersection(sentence)) / len(
+                                    question.words) >= self.threshold_NER) and NER_text[
+                            NER_tag[tmp].index('PERCENT')] not in question.words and question.possible:
+                            tmp = tmp + 1
+                            correct = correct + 1
+                            found = True
+                            break
+                        elif ('work' or 'job' in question.words) and ('ORG' in self.NER_tag[tmp]) and \
+                                (1.0 * len(set(question.words).intersection(sentence)) / len(
+                                    question.words) >= self.threshold_NER) and NER_text[
+                            NER_tag[tmp].index('ORG')] not in question.words and question.possible:
+                            tmp = tmp + 1
+                            correct = correct + 1
+                            found = True
+                            break
+                        elif 'national' in question.words and 'NORP' in self.NER_tag[tmp] and \
+                                (1.0 * len(set(question.words).intersection(sentence)) / len(
+                                    question.words) >= self.threshold_NER) and NER_text[
+                            NER_tag[tmp].index('NORP')] not in question.words and question.possible:
+                            tmp = tmp + 1
+                            correct = correct + 1
+                            found = True
+                            break
+                        elif 1.0 * len(set(question.words).intersection(sentence)) / len(
+                                question.words) >= self.threshold_SIM and question.possible:
+                            tmp = tmp + 1
+                            correct = correct + 1
                             found = True
                             break
                         else:
-                            count = count + 1
+                            tmp = tmp + 1
                     if not found and not question.possible:
                         correct = correct + 1
+                count = count + len(paragraph.sentences)
 
-
-        return correct, count
+        return correct, question_sum
 
     def check_same_word_csv(self):
-        count = 1
-        tmp = 1
+        count = 0
+        tmp = 0
         with open('output/output_baseline4.csv', 'w') as outfile:
             speech_writer = csv.writer(outfile, delimiter=',', quotechar='"',
                                        quoting=csv.QUOTE_MINIMAL)
-            speech_writer.writerow(['Id', 'Predicted'])
+            speech_writer.writerow(['Id', 'Category'])
             for article in self.articles:
                 for paragraph in article.paragraphs:
                     for question in paragraph.questions:
@@ -83,88 +164,287 @@ class Baseline4:
                             # print(len(set(question.words).intersection(sentence)), len(question.words))
                             # print(question.words)
                             # print(NER[count])
-                            if ('country' or 'city' or 'state' in question.words) and ('GPE' in self.NER[tmp]) and \
+                            if ('country' or 'city' or 'state' in question.words) and ('GPE' in self.NER_tag[tmp]) and \
                                     (1.0 * len(set(question.words).intersection(sentence)) / len(
-                                        question.words) >= self.threshold):
-                                tmp = tmp + 2
+                                        question.words) >= self.threshold_NER) and NER_text[
+                                NER_tag[tmp].index('GPE')] not in question.words:
+                                tmp = tmp + 1
                                 speech_writer.writerow([question.id, 1])
                                 found = True
                                 break
-                            elif ('who' in question.words) and ('PERSON' in self.NER[tmp]) and \
+                            elif ('who' in question.words) and ('PERSON' in self.NER_tag[tmp]) and \
                                     (1.0 * len(set(question.words).intersection(sentence)) / len(
-                                        question.words) >= self.threshold):
-                                tmp = tmp + 2
+                                        question.words) >= self.threshold_NER and NER_text[
+                                         NER_tag[tmp].index('PERSON')] not in question.words):
+                                tmp = tmp + 1
                                 speech_writer.writerow([question.id, 1])
                                 found = True
                                 break
-                            elif ('where' in question.words) and ('LOC' or 'GPE' or 'FAC' in self.NER[tmp]) and \
+                            elif ('where' in question.words) and ('LOC' in self.NER_tag[tmp]) and \
                                     (1.0 * len(set(question.words).intersection(sentence)) / len(
-                                        question.words) >= self.threshold):
-                                tmp = tmp + 2
+                                        question.words) >= self.threshold_NER) and \
+                                    (NER_text[NER_tag[tmp].index('LOC')] not in question.words):
+                                tmp = tmp + 1
                                 speech_writer.writerow([question.id, 1])
                                 found = True
                                 break
-                            elif ('data' or 'time' in question.words) and ('DATE' or 'TIME' in self.NER[tmp]) and \
+                            elif ('where' in question.words) and ('GPE' in self.NER_tag[tmp]) and \
                                     (1.0 * len(set(question.words).intersection(sentence)) / len(
-                                        question.words) >= self.threshold):
-                                tmp = tmp + 2
+                                        question.words) >= self.threshold_NER) and \
+                                    (NER_text[NER_tag[tmp].index('GPE')] not in question.words):
+                                tmp = tmp + 1
                                 speech_writer.writerow([question.id, 1])
                                 found = True
                                 break
-                            elif 1.0 * len(set(question.words).intersection(sentence)) / len(question.words) >= self.threshold:
-                                tmp = tmp + 2
+                            elif ('where' in question.words) and ('FAC' in self.NER_tag[tmp]) and \
+                                    (1.0 * len(set(question.words).intersection(sentence)) / len(
+                                        question.words) >= self.threshold_NER) and \
+                                    (NER_text[NER_tag[tmp].index('FAC')] not in question.words):
+                                tmp = tmp + 1
+                                speech_writer.writerow([question.id, 1])
+                                found = True
+                                break
+                            elif ('when' or 'date' or 'time' in question.words) and ('DATE' in self.NER_tag[tmp]) and \
+                                    (1.0 * len(set(question.words).intersection(sentence)) / len(
+                                        question.words) >= self.threshold_NER) and \
+                                    (NER_text[NER_tag[tmp].index('DATE')] not in question.words):
+                                tmp = tmp + 1
+                                speech_writer.writerow([question.id, 1])
+                                found = True
+                                break
+                            elif ('when' or 'date' or 'time' in question.words) and ('TIME' in self.NER_tag[tmp]) and \
+                                    (1.0 * len(set(question.words).intersection(sentence)) / len(
+                                        question.words) >= self.threshold_NER) and \
+                                    (NER_text[NER_tag[tmp].index('TIME')] not in question.words):
+                                tmp = tmp + 1
+                                speech_writer.writerow([question.id, 1])
+                                found = True
+                                break
+                            elif ('how' and 'many' in question.words) and ('CARDINAL' in self.NER_tag[tmp]) and \
+                                    (1.0 * len(set(question.words).intersection(sentence)) / len(
+                                        question.words) >= self.threshold_NER) and \
+                                    (NER_text[NER_tag[tmp].index('CARDINAL')] not in question.words):
+                                tmp = tmp + 1
+                                speech_writer.writerow([question.id, 1])
+                                found = True
+                                break
+                            elif ('how' and 'many' in question.words) and ('QUANTITY' in self.NER_tag[tmp]) and \
+                                    (1.0 * len(set(question.words).intersection(sentence)) / len(
+                                        question.words) >= self.threshold_NER) and \
+                                    (NER_text[NER_tag[tmp].index('QUANTITY')] not in question.words):
+                                tmp = tmp + 1
+                                speech_writer.writerow([question.id, 1])
+                                found = True
+                                break
+                            elif ('how' and 'much' in question.words) and ('MONEY' in self.NER_tag[tmp]) and \
+                                    (1.0 * len(set(question.words).intersection(sentence)) / len(
+                                        question.words) >= self.threshold_NER) and NER_text[
+                                NER_tag[tmp].index('MONEY')] not in question.words:
+                                tmp = tmp + 1
+                                speech_writer.writerow([question.id, 1])
+                                found = True
+                                break
+                            elif ('per' in question.words) and ('PERCENT' in self.NER_tag[tmp]) and \
+                                    (1.0 * len(set(question.words).intersection(sentence)) / len(
+                                        question.words) >= self.threshold_NER) and NER_text[
+                                NER_tag[tmp].index('PERCENT')] not in question.words:
+                                tmp = tmp + 1
+                                speech_writer.writerow([question.id, 1])
+                                found = True
+                                break
+                            elif ('work' or 'job' in question.words) and ('ORG' in self.NER_tag[tmp]) and \
+                                    (1.0 * len(set(question.words).intersection(sentence)) / len(
+                                        question.words) >= self.threshold_NER) and NER_text[
+                                NER_tag[tmp].index('ORG')] not in question.words:
+                                tmp = tmp + 1
+                                speech_writer.writerow([question.id, 1])
+                                found = True
+                                break
+                            elif 'national' in question.words and 'NORP' in self.NER_tag[tmp] and \
+                                    (1.0 * len(set(question.words).intersection(sentence)) / len(
+                                        question.words) >= self.threshold_NER) and NER_text[
+                                NER_tag[tmp].index('NORP')] not in question.words:
+                                tmp = tmp + 1
+                                speech_writer.writerow([question.id, 1])
+                                found = True
+                                break
+                            elif 1.0 * len(set(question.words).intersection(sentence)) / len(
+                                    question.words) >= self.threshold_SIM:
+                                tmp = tmp + 1
                                 speech_writer.writerow([question.id, 1])
                                 found = True
                                 break
                             else:
-                                tmp = tmp + 2
+                                tmp = tmp + 1
                         if not found:
                             speech_writer.writerow([question.id, 0])
-                    count = count + len(paragraph.sentences)*2
+                    count = count + len(paragraph.sentences)
+
 
     def check_same_word_json(self):
         out = {}
+        # count = 0
         count = 0
+        tmp = 0
         for article in self.articles:
             for paragraph in article.paragraphs:
                 for question in paragraph.questions:
                     found = False
+                    tmp = count
                     for sentence in paragraph.sentences:
-
                         # print(set(question.words).intersection(sentence))
                         # print(sentence)
                         # print(question.words)
                         # print(len(set(question.words).intersection(sentence)), len(question.words))
-                        if 1.0 * len(set(question.words).intersection(sentence)) / len(
-                                question.words) >= self.threshold:
-                            count = count + 1
+                        # print(question.words)
+                        # print(NER[count])
+                        if ('country' or 'city' or 'state' in question.words) and ('GPE' in self.NER_tag[tmp]) and \
+                                (1.0 * len(set(question.words).intersection(sentence)) / len(
+                                    question.words) >= self.threshold_NER) and NER_text[NER_tag[tmp].index('GPE')] not in question.words:
+                            tmp = tmp + 1
                             out[question.id] = 1
                             found = True
                             break
+                        elif ('who' in question.words) and ('PERSON' in self.NER_tag[tmp]) and \
+                                (1.0 * len(set(question.words).intersection(sentence)) / len(
+                                    question.words) >= self.threshold_NER and NER_text[NER_tag[tmp].index('PERSON')] not in question.words):
+                            tmp = tmp + 1
+                            out[question.id] = 1
+                            found = True
+                            break
+                        elif ('where' in question.words) and ('LOC' in self.NER_tag[tmp]) and \
+                                (1.0 * len(set(question.words).intersection(sentence)) / len(
+                                    question.words) >= self.threshold_NER) and \
+                                (NER_text[NER_tag[tmp].index('LOC')] not in question.words):
+                            tmp = tmp + 1
+                            out[question.id] = 1
+                            found = True
+                            break
+                        elif ('where' in question.words) and ('GPE' in self.NER_tag[tmp]) and \
+                                (1.0 * len(set(question.words).intersection(sentence)) / len(
+                                    question.words) >= self.threshold_NER) and \
+                                (NER_text[NER_tag[tmp].index('GPE')] not in question.words):
+                            tmp = tmp + 1
+                            out[question.id] = 1
+                            found = True
+                            break
+                        elif ('where' in question.words) and ('FAC' in self.NER_tag[tmp]) and \
+                                (1.0 * len(set(question.words).intersection(sentence)) / len(
+                                    question.words) >= self.threshold_NER) and \
+                                (NER_text[NER_tag[tmp].index('FAC')] not in question.words):
+                            tmp = tmp + 1
+                            out[question.id] = 1
+                            found = True
+                            break
+                        elif ('when' or 'date' or 'time' in question.words) and ('DATE' in self.NER_tag[tmp]) and \
+                                (1.0 * len(set(question.words).intersection(sentence)) / len(
+                                    question.words) >= self.threshold_NER) and \
+                                (NER_text[NER_tag[tmp].index('DATE')] not in question.words):
+                            tmp = tmp + 1
+                            out[question.id] = 1
+                            found = True
+                            break
+                        elif ('when' or 'date' or 'time' in question.words) and ('TIME' in self.NER_tag[tmp]) and \
+                                (1.0 * len(set(question.words).intersection(sentence)) / len(
+                                    question.words) >= self.threshold_NER) and \
+                                (NER_text[NER_tag[tmp].index('TIME')] not in question.words):
+                            tmp = tmp + 1
+                            out[question.id] = 1
+                            found = True
+                            break
+                        elif ('how' and 'many' in question.words) and ('CARDINAL' in self.NER_tag[tmp]) and \
+                                (1.0 * len(set(question.words).intersection(sentence)) / len(
+                                    question.words) >= self.threshold_NER) and \
+                                (NER_text[NER_tag[tmp].index('CARDINAL')] not in question.words):
+                            tmp = tmp + 1
+                            out[question.id] = 1
+                            found = True
+                            break
+                        elif ('how' and 'many' in question.words) and ('QUANTITY' in self.NER_tag[tmp]) and \
+                                (1.0 * len(set(question.words).intersection(sentence)) / len(
+                                    question.words) >= self.threshold_NER) and \
+                                (NER_text[NER_tag[tmp].index('QUANTITY')] not in question.words):
+                            tmp = tmp + 1
+                            out[question.id] = 1
+                            found = True
+                            break
+                        elif ('how' and 'much' in question.words) and ('MONEY' in self.NER_tag[tmp]) and \
+                                (1.0 * len(set(question.words).intersection(sentence)) / len(
+                                    question.words) >= self.threshold_NER) and NER_text[NER_tag[tmp].index('MONEY')] not in question.words:
+                            tmp = tmp + 1
+                            out[question.id] = 1
+                            found = True
+                            break
+                        elif ('per' in question.words) and ('PERCENT' in self.NER_tag[tmp]) and \
+                                (1.0 * len(set(question.words).intersection(sentence)) / len(
+                                    question.words) >= self.threshold_NER) and NER_text[
+                            NER_tag[tmp].index('PERCENT')] not in question.words:
+                            tmp = tmp + 1
+                            out[question.id] = 1
+                            found = True
+                            break
+                        elif ('work' or 'job' in question.words) and ('ORG' in self.NER_tag[tmp]) and \
+                                (1.0 * len(set(question.words).intersection(sentence)) / len(
+                                    question.words) >= self.threshold_NER) and NER_text[
+                            NER_tag[tmp].index('ORG')] not in question.words:
+                            tmp = tmp + 1
+                            out[question.id] = 1
+                            found = True
+                            break
+                        elif 'national' in question.words and 'NORP' in self.NER_tag[tmp] and \
+                                (1.0 * len(set(question.words).intersection(sentence)) / len(
+                                    question.words) >= self.threshold_NER) and NER_text[
+                            NER_tag[tmp].index('NORP')] not in question.words:
+                            tmp = tmp + 1
+                            out[question.id] = 1
+                            found = True
+                            break
+                        elif 1.0 * len(set(question.words).intersection(sentence)) / len(question.words) >= self.threshold_SIM:
+                            tmp = tmp + 1
+                            out[question.id] = 1
+                            found = True
+                            break
+                        else:
+                            tmp = tmp + 1
                     if not found:
                         out[question.id] = 0
-        with open('output/output_baseline1.json', 'w') as outfile:
+                count = count + len(paragraph.sentences)
+
+        with open('output/output_baseline4.json', 'w') as outfile:
             json.dump(out, outfile)
         print(len(out))
 
 
 if __name__ == "__main__":
     my_prep = prep.Preprocessing(True)
-    my_prep.load_file('data/testing.json', True)
+    my_prep.load_file('data/development.json', False)
 
-    fhandle = open('data/NER_tag_testing_final.txt', 'r')
-    NER = []
+    fhandle = open('data/NER_tag_validation_final_final.txt', 'r')
+    NER_tag = []
+    NER_text = []
     # i = 0
     for line in fhandle:
         tag = line.strip('\n').split(',')
-        NER.append(tag)
+        if tag[0] == '0':
+            NER_text.append(tag)
+        elif tag[0] == '1':
+            NER_tag.append(tag)
         # print(NER[i])
         # i = i + 1
+    print(len(NER_text))
+    print(len(NER_tag))
+    model = Baseline4(my_prep.articles,NER_text,NER_tag)
 
-    model = Baseline4(my_prep.articles,NER)
+
     # correct,count = model.check_same_word()
     # print(correct,count)
-    # print(correct/((count-1)/2))
-    # print(model.check_same_word()/69596)
-    model.check_same_word_csv()
+    # print(correct/count)
+
+
+    # model.check_same_word_csv()
+
+
+    model.check_same_word_json()
+
+
 
