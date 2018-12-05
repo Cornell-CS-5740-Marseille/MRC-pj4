@@ -26,31 +26,26 @@ class Memen():
 
         self.context = tf.placeholder(tf.int32, [None, self.context_len], name="context")
 
-        # answer start
-        self.label_start = tf.placeholder(tf.int32, [None], name="start_point")
-        # answer end
-        self.label_end = tf.placeholder(tf.int32, [None], name="end_point")
+        # answerable
+        self.answerable = tf.placeholder(tf.int32, [None], name="answerable")
 
         # initialize the weight
-
         # word embedding
         self.embedding_word = tf.get_variable("word_embeddings", [self.vocab_size, self.embedding_size])
         self.embedding_query = tf.get_variable("query_embeddings", [self.vocab_size, self.embedding_size])
 
 
-        self.weight1 = tf.get_variable("weight1", [self.hidden_size * 6, 1])
-        self.weight_s = tf.get_variable("weight_s", [self.hidden_size * 2, 1])
+        # self.weight1 = tf.get_variable("weight1", [self.hidden_size * 6, 1])
+        # self.weight_s = tf.get_variable("weight_s", [self.hidden_size * 2, 1])
 
-        self.start_index, self.end_index = self.inference()
+        self.pred_answerable = self.inference()
         self.loss_val = self.loss()
 
-        self.predictions_start = tf.argmax(self.start_index, axis=1, name="predictions_start")
-        self.predictions_end = tf.argmax(self.end_index, axis=1, name="predictions_end")
+        self.predictions_answerable = tf.argmax(self.pred_answerable, axis=1, name="prediction_answerable")
 
-        correct_prediction_start = tf.equal(tf.cast(self.predictions_start, tf.int32), self.label_start)
-        self.accurate_start = tf.reduce_mean(tf.cast(correct_prediction_start, tf.float32), name="accuracy_start")
-        correct_prediction_end = tf.equal(tf.cast(self.predictions_end, tf.int32), self.label_end)
-        self.accurate_end = tf.reduce_mean(tf.cast(correct_prediction_end, tf.float32), name="accuracy_end")
+        correct_predicted_answerable = tf.equal(tf.cast(self.predictions_answerable, tf.int32), self.answerable)
+        self.accurate_answerable = tf.reduce_mean(tf.cast(correct_predicted_answerable, tf.float32), name="accuracy_answerable")
+
         if self.is_training:
             self.train_op = self.train()
 
@@ -61,8 +56,8 @@ class Memen():
         # memory network of full-orientation matching
         self.matching_layer()
         # output layer
-        start_index, end_index = self.output_layer()
-        return start_index, end_index
+        answerable = self.output_layer()
+        return answerable
 
     def encoding_layer(self):
         # embedding of word
@@ -212,22 +207,19 @@ class Memen():
     # we follow Wang to initialize the hidden state of the pointer network by a query-aware representation:
     def output_layer(self):
         # initialize the hidden state of the pointer network by a query-aware representation.
-        start_prediction = None
-        end_prediction = None
+        answerable_prediction = None
         with tf.variable_scope("output_layer"):
             l_0 = self.initial_hidden_state()
-            # k = 1,2 represent the start point and end point of the answer
-            l_k_1 = l_k_2 = l_0
+            l_k_1 = l_0
             for i in range(self.output_hop_num):
                 if i > 0:
                     tf.get_variable_scope().reuse_variables()
-                start_prediction, end_prediction, v_k_1, v_k_2 = self.point_network(l_k_1, l_k_2)
+                answerable_prediction, v_k = self.point_network_single(1, l_k_1)
 
                 # pass O weighted by current predicted probability aK
                 # use GRU to update l_k with v_k as input
-                l_k_1 = self.GRU(1, l_k_1, v_k_1)
-                l_k_2 = self.GRU(2, l_k_2, v_k_2)
-        return start_prediction, end_prediction
+                l_k_1 = self.GRU(1, l_k_1, v_k)
+        return answerable_prediction
 
     def initial_hidden_state(self):
         # initialize the hidden state of the pointer network by a query-aware representation
@@ -266,12 +258,10 @@ class Memen():
 
     def loss(self):
         #label_start:[none]; self.logits_start:[none, article_len]
-        loss_start = tf.nn.sparse_softmax_cross_entropy_with_logits(labels=self.label_start, logits=self.start_index)
-        loss_start = tf.reduce_mean(loss_start)
-        loss_end = tf.nn.sparse_softmax_cross_entropy_with_logits(labels=self.label_end, logits=self.end_index)
-        loss_end = tf.reduce_mean(loss_end)
+        loss_answerable = tf.nn.sparse_softmax_cross_entropy_with_logits(labels=self.answerable, logits=self.pred_answerable)
+        loss_answerable = tf.reduce_mean(loss_answerable)
         l2_losses = tf.add_n([tf.nn.l2_loss(v) for v in tf.trainable_variables() if ('bias' not in v.name)]) * self.l2_lambda
-        loss = loss_start+loss_end+l2_losses
+        loss = loss_answerable + l2_losses
         return loss
 
 

@@ -15,6 +15,7 @@ class Article:
 
 class Paragraph:
     def __init__(self):
+        self.sentences_word = []
         self.context = ''
         self.sentences = []
         self.questions = []
@@ -25,10 +26,11 @@ class Paragraph:
         return self
 
     def parse_sentences(self):
-        self.words = self.context.split(" ")
+        self.words = re.split(' ', self.context)
         self.sentences = re.split('\. |; |\."|! |\? ', self.context)
         for i in range(len(self.sentences)):
             self.sentences[i] = self.sentences[i].split(' ')
+            self.sentences_word += self.sentences[i]
 
 
 class Question:
@@ -44,12 +46,13 @@ class Question:
         return self
 
     def parse_questions(self):
-        self.words = self.question.split(' ')
+        self.words = re.split(' ', self.question)
 
 class Answer:
     def __init__(self):
         self.text = ''
         self.answer_start = 0
+        self.words = []
 
 
 class Preprocessing:
@@ -82,6 +85,7 @@ class Preprocessing:
                         new_question.question = question['question'] if not self.lower else question['question'].lower()
                         new_question.id = question['id']
                         new_question.parse_questions()
+                        self.update_dict(new_question.words)
 
                         count_total = count_total + 1
                         if not is_test:
@@ -94,6 +98,8 @@ class Preprocessing:
                                 new_answer = Answer()
                                 new_answer.text = answer['text'] if not self.lower else answer['text'].lower()
                                 new_answer.answer_start = answer['answer_start']
+                                new_answer.words = re.split(' ', new_answer.text)
+                                self.update_dict(new_answer.words)
                                 new_question.answers.append(new_answer)
                         new_paragraph.questions.append(new_question)
                     new_article.paragraphs.append(new_paragraph)
@@ -115,4 +121,4 @@ class Preprocessing:
 
 if __name__ == "__main__":
     my_prep = Preprocessing(True)
-    my_prep.load_file('data/training.json')
+    my_prep.load_file('data/training.json', False)
