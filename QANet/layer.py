@@ -1,7 +1,6 @@
 from QANet.params import Params as param
 import QANet.util as util
 import tensorflow as tf
-import numpy as np
 
 
 # a tensorflow computation graph is treated as an object of the Graph class
@@ -12,33 +11,21 @@ class Graph(object):
             # paceholders for inputs and outputs
             B, N, M, C = param.batch_size, param.max_context_words, param.max_question_words, param.max_chars
             # get inputs and outputs
-            self.x_c_w, self.x_c_c, self.x_q_w, self.x_q_c, self.y = my.get_batch_data()
-            '''
-            #can also use placeholders as below if needed:
-            #input sequence of word vocabulary indices of the context
-            self.x_c_w = tf.placeholder(tf.int32, shape=[B, N], name="context_words")
-            #input sequence of char vocabulary indices (0 to 25) of the words of the context
-            self.x_c_c = tf.placeholder(tf.int32, shape=[B, N, C], name="context_word_chars")
-            #input sequence of question vocabulary indices of the context
-            self.x_q_w =  tf.placeholder(tf.int32, shape=[B, M], name="question_words")
-            #input sequence of char vocabulary indices (0 to 25) of the words of the question
-            self.x_q_c = tf.placeholder(tf.int32, shape=[B, M, C], name="context_question_chars")
-            #output as a one hot encoding of the start position and end position indices over the context words
-            self.y = tf.placeholder(tf.int32, shape=[B, N, 2], name="out")
-            '''
+            self.x_c_w, self.x_c_c, self.x_q_w, self.x_q_c, self.y = util.get_batch_data(param.training_set)
+
 
             '''          
             part1: an embedding layer
             '''
             VW, VC, DW, DC = param.word_vocab_size, param.char_vocab_size, param.word_emb_dim, param.char_emb_dim
             # compute word embeddings of the context words through 300 dimensional GloVe embedding
-            self.x_c_w_emb = util.embedding(inputs=self.x_c_w, shape=[VW, DW], scope="word_embedding", reuse=None)
+            self.x_c_w_emb = util.embedding(inputs=self.x_c_w, shape=[VW, DW], scope="word_embedding")
             # compute word embeddings of the question words through 300 dimensional GloVe embedding
-            self.x_q_w_emb = util.embedding(inputs=self.x_q_w, scope="word_embedding", reuse=True)
+            self.x_q_w_emb = util.embedding(inputs=self.x_q_w, scope="word_embedding")
             # compute through character embeddings of the context words
-            self.x_c_c_emb = util.embedding(inputs=self.x_c_c, shape=[VC, DC], scope="char_embedding", reuse=None)
+            self.x_c_c_emb = util.embedding(inputs=self.x_c_c, shape=[VC, DC], scope="char_embedding")
             # compute character embeddings of the question words
-            self.x_q_c_emb = util.embedding(inputs=self.x_q_c, scope="char_embedding", reuse=True)
+            self.x_q_c_emb = util.embedding(inputs=self.x_q_c, scope="char_embedding")
 
             # max pooling over character embeddings to get fixed size embedding of each word
             self.x_c_c_emb = tf.reduce_max(self.x_c_c_emb, reduction_indices=[2])
@@ -83,7 +70,11 @@ class Graph(object):
             # computing c dot b
             self.c_mult_att_b = tf.multiply(self.x_c_enc, self.att_b)
             # computing [c, a, c dot a, c dot b] 
-            # NOTE: there is an ambiguity here. Since the encoder blocks have to share weights, the input dimensions to each block should remain same, however the startig input is mentioned as a concatenation of four 128 dimensional (=512) hidden states [c, a, c dot a, c dot b] while the blocks above the first block will have inputs of 128 dimensional since a 1D convolution will map the first 512 dimensional input to a 128 dimensional output. To overcome this, an average composition instead of a concat is used over (c, a, c dot a, c dot b)
+            # NOTE: there is an ambiguity here. Since the encoder blocks have to share weights,
+            # the input dimensions to each block should remain same,
+            # however the startig input is mentioned as a concatenation of four 128 dimensional (=512) hidden states [c, a, c dot a, c dot b]
+            # while the blocks above the first block will have inputs of 128 dimensional since a 1D convolution will map the first 512 dimensional input to a 128 dimensional output.
+            # To overcome this, an average composition instead of a concat is used over (c, a, c dot a, c dot b)
             # compute average of [c, a, c dot a, c dot b] tensors 
             # dimension=[B, N, d] ([batch_size, max_words_context, hidden_dimension=128])
             self.model_enc = tf.reduce_mean(tf.concat(

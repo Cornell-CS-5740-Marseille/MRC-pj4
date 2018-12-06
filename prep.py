@@ -18,12 +18,14 @@ class Paragraph:
         self.context = ''
         self.sentences = []
         self.questions = []
+        self.words = []
 
     def convert_to_lower(self):
         self.context = self.context.lower()
         return self
 
     def parse_sentences(self):
+        self.words = self.context.split(" ")
         self.sentences = re.split('\. |; |\."|! |\? ', self.context)
         for i in range(len(self.sentences)):
             self.sentences[i] = self.sentences[i].split(' ')
@@ -53,7 +55,10 @@ class Answer:
 class Preprocessing:
     def __init__(self, lower):
         self.articles = []
+        self.dictionary = {}
+        self.context_words = []
         self.lower = lower
+        self.dict_index = 0
 
     def load_file(self, path, is_test):
         start_time = time.time()
@@ -70,11 +75,14 @@ class Preprocessing:
                     new_paragraph = Paragraph()
                     new_paragraph.context = paragraph['context'] if not self.lower else paragraph['context'].lower()
                     new_paragraph.parse_sentences()
+                    self.update_dict(new_paragraph.words)
+                    self.context_words.append(new_paragraph.words)
                     for question in paragraph['qas']:
                         new_question = Question()
                         new_question.question = question['question'] if not self.lower else question['question'].lower()
                         new_question.id = question['id']
                         new_question.parse_questions()
+
                         count_total = count_total + 1
                         if not is_test:
                             new_question.possible = question['is_impossible'] is False
@@ -94,6 +102,15 @@ class Preprocessing:
         end_time = time.time()
         print('pre-processing time:', end_time - start_time)
         print('total:', count_total, 'possible:', count_possible, 'impossible:', count_impossible)
+
+    def update_dict(self, sentence):
+        for word in sentence:
+            if not (word in self.dictionary):
+                self.dictionary[word] = self.dict_index
+                self.dict_index = self.dict_index + 1
+
+    def word_ids(self, sentence):
+        return list(map(lambda x: self.dictionary[x], sentence))
 
 
 if __name__ == "__main__":

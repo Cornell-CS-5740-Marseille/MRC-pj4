@@ -6,7 +6,7 @@ import json
 class Baseline1:
     def __init__(self, articles):
         self.articles = articles
-        self.threshold = 0.5
+        self.threshold = 0.3
 
     def check_same_word(self):
         correct = 0
@@ -29,7 +29,7 @@ class Baseline1:
         with open('output/output_baseline1.csv', 'w') as outfile:
             speech_writer = csv.writer(outfile, delimiter=',', quotechar='"',
                                        quoting=csv.QUOTE_MINIMAL)
-            speech_writer.writerow(['Id', 'Predicted'])
+            speech_writer.writerow(['Id', 'Category'])
             for article in self.articles:
                 for paragraph in article.paragraphs:
                     for question in paragraph.questions:
@@ -70,8 +70,8 @@ class Baseline1:
 
 if __name__ == "__main__":
     my_prep = prep.Preprocessing(True)
-    my_prep.load_file('data/testing.json', True)
+    my_prep.load_file('data/development.json', False)
     model = Baseline1(my_prep.articles)
-    model.check_same_word_csv()
+    model.check_same_word_json()
     # print(model.check_same_word()/69596)
 
