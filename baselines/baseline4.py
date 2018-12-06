@@ -283,10 +283,10 @@ class Baseline4:
 if __name__ == "__main__":
     my_prep = prep.Preprocessing(True)
     my_prep.load_file('data/development.json', False)  #validation
-    fhandle = open('data/NER_tag_validation.txt', 'r')  #validation
+    fhandle = open('data/NER_tag_validation_final_final.txt', 'r')  #validation
     
     #my_prep.load_file('data/test.json', True)   #test
-    #fhandle = open('data/NER_tag_test.txt', 'r')  #test
+    #fhandle = open('data/NER_tag_test_final.txt', 'r')  #test
     NER_tag = []
     NER_text = []
     # i = 0
