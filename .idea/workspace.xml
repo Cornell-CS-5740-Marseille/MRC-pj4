@@ -2,29 +2,34 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4c78096f-473e-4c9f-bd09-0a0a0019a6d4" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/LSTM/data/trainHistory.pickle" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/LSTM/main.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/LSTM/model.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/LSTM/params.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MEMEN/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MEMEN/main.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MEMEN/memnn.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MEMEN/model.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MEMEN/params.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MEMEN/word2vec.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/MEMEN/data/loss_MEMNN.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/MEMEN/simple_model.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data/NER_tag_train_final_final.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data/NER_tag_validation_final_final.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data/POS_tag_train_final_final.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data/POS_tag_validation_final_final.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QANet/layer.py" beforeDir="false" afterPath="$PROJECT_DIR$/QANet/layer.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QANet/params.py" beforeDir="false" afterPath="$PROJECT_DIR$/QANet/params.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QANet/util.py" beforeDir="false" afterPath="$PROJECT_DIR$/QANet/util.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/baseline1.py" beforeDir="false" afterPath="$PROJECT_DIR$/baseline1.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/baseline2.py" beforeDir="false" afterPath="$PROJECT_DIR$/baseline2.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/baseline3.py" beforeDir="false" afterPath="$PROJECT_DIR$/baseline3.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LSTM/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/LSTM/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LSTM/model.py" beforeDir="false" afterPath="$PROJECT_DIR$/LSTM/model.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LSTM/params.py" beforeDir="false" afterPath="$PROJECT_DIR$/LSTM/params.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MEMEN/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/MEMEN/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MEMEN/memnn.py" beforeDir="false" afterPath="$PROJECT_DIR$/MEMEN/memnn.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MEMEN/model.py" beforeDir="false" afterPath="$PROJECT_DIR$/MEMEN/model.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MEMEN/params.py" beforeDir="false" afterPath="$PROJECT_DIR$/MEMEN/params.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QANet/layer.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/QANet/main.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/QANet/params.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/QANet/util.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/baseline1.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/baseline2.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/baseline3.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/evaluate.py" beforeDir="false" afterPath="$PROJECT_DIR$/data/evaluate.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/data/test.json" beforeDir="false" afterPath="$PROJECT_DIR$/data/test.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/evaluate.py" beforeDir="false" afterPath="$PROJECT_DIR$/evaluate.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ngram.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/output/output_baseline1.csv" beforeDir="false" afterPath="$PROJECT_DIR$/output/output_baseline1.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/output/output_baseline1.json" beforeDir="false" afterPath="$PROJECT_DIR$/output/output_baseline1.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/output/output_baseline2.csv" beforeDir="false" afterPath="$PROJECT_DIR$/output/output_baseline2.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/prep.py" beforeDir="false" afterPath="$PROJECT_DIR$/prep.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/prep.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/preprocessor.py" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -35,8 +40,9 @@
   <component name="CoverageDataManager">
     <SUITE FILE_PATH="coverage/MRC_pj4$evaluate.coverage" NAME="evaluate Coverage Results" MODIFIED="1543895885706" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/MRC_pj4$baseline2.coverage" NAME="baseline2 Coverage Results" MODIFIED="1543901314399" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/MRC_pj4$baseline1.coverage" NAME="baseline1 Coverage Results" MODIFIED="1543900037890" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/MRC_pj4$baseline1__1_.coverage" NAME="baseline1 (1) Coverage Results" MODIFIED="1544068313363" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/baselines" />
     <SUITE FILE_PATH="coverage/MRC_pj4$baseline3.coverage" NAME="baseline3 Coverage Results" MODIFIED="1543902011425" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/MRC_pj4$baseline1.coverage" NAME="baseline1 Coverage Results" MODIFIED="1544068183335" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/MRC_pj4$evaluate__1_.coverage" NAME="evaluate (1) Coverage Results" MODIFIED="1543957759873" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/data" />
   </component>
   <component name="FUSProjectUsageTrigger">
@@ -44,101 +50,66 @@
       <usages-collector id="statistics.lifecycle.project">
         <counts>
           <entry key="project.closed" value="2" />
+          <entry key="project.open.time.1" value="1" />
           <entry key="project.open.time.2" value="1" />
-          <entry key="project.opened" value="2" />
+          <entry key="project.opened" value="3" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="csv" value="3" />
-          <entry key="json" value="6" />
-          <entry key="py" value="10" />
+          <entry key="csv" value="4" />
+          <entry key="json" value="7" />
+          <entry key="py" value="15" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="CSV" value="3" />
-          <entry key="JSON" value="6" />
-          <entry key="Python" value="10" />
+          <entry key="CSV" value="4" />
+          <entry key="JSON" value="7" />
+          <entry key="Python" value="15" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="py" value="1759" />
+          <entry key="py" value="1801" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="Python" value="1759" />
+          <entry key="Python" value="1801" />
         </counts>
       </usages-collector>
     </session>
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/baseline3.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1785">
-              <caret line="125" column="49" selection-start-line="125" selection-start-column="49" selection-end-line="125" selection-end-column="49" />
-              <folding>
-                <element signature="e#0#19#0" expanded="true" />
-                <marker date="1543897629226" expanded="true" signature="417:1846" ph="..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/baseline2.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1335">
-              <caret line="92" column="44" selection-start-line="92" selection-start-column="44" selection-end-line="92" selection-end-column="44" />
-              <folding>
-                <element signature="e#0#19#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/baseline1.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="645">
-              <caret line="45" column="16" selection-start-line="45" selection-start-column="16" selection-end-line="45" selection-end-column="16" />
-              <folding>
-                <element signature="e#0#11#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/data/evaluate.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1440">
-              <caret line="98" column="83" selection-start-line="98" selection-start-column="83" selection-end-line="98" selection-end-column="83" />
-              <folding>
-                <element signature="e#0#11#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/output/output_baseline1.json">
+        <entry file="file://$PROJECT_DIR$/baselines/baseline1.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="156">
-              <caret column="10163" selection-start-column="10139" selection-end-column="10163" />
+            <state relative-caret-position="405">
+              <caret line="27" column="27" lean-forward="true" selection-start-line="27" selection-start-column="27" selection-end-line="27" selection-end-column="27" />
+              <folding>
+                <element signature="e#0#11#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/prep.py">
+        <entry file="file://$PROJECT_DIR$/baselines/prep_NER.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="660">
-              <caret line="46" column="40" selection-start-line="46" selection-start-column="40" selection-end-line="46" selection-end-column="40" />
+            <state>
+              <folding>
+                <element signature="e#0#11#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/baselines/prep.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state>
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
               </folding>
@@ -163,9 +134,10 @@
         <option value="$PROJECT_DIR$/MEMEN/word2vec.py" />
         <option value="$PROJECT_DIR$/evaluate.py" />
         <option value="$PROJECT_DIR$/baseline3.py" />
-        <option value="$PROJECT_DIR$/baseline1.py" />
         <option value="$PROJECT_DIR$/baseline2.py" />
         <option value="$PROJECT_DIR$/data/evaluate.py" />
+        <option value="$PROJECT_DIR$/baseline1.py" />
+        <option value="$PROJECT_DIR$/baselines/baseline1.py" />
       </list>
     </option>
   </component>
@@ -175,7 +147,7 @@
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds" fullScreen="true">
     <option name="y" value="23" />
     <option name="width" value="1680" />
     <option name="height" value="943" />
@@ -185,13 +157,17 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
             <path>
               <item name="MRC-pj4" type="b2602c69:ProjectViewProjectNode" />
               <item name="MRC-pj4" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="MRC-pj4" type="b2602c69:ProjectViewProjectNode" />
+              <item name="MRC-pj4" type="462c0819:PsiDirectoryNode" />
+              <item name="baselines" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="MRC-pj4" type="b2602c69:ProjectViewProjectNode" />
@@ -212,10 +188,12 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
   </component>
@@ -231,7 +209,29 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.evaluate (1)">
+  <component name="RunManager" selected="Python.baseline1 (1)">
+    <configuration name="baseline1 (1)" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="MRC-pj4" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/baselines" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/baselines/baseline1.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="baseline1" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="MRC-pj4" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -320,42 +320,20 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="evaluate" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="MRC-pj4" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/evaluate.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
     <list>
       <item itemvalue="Python.baseline2" />
-      <item itemvalue="Python.evaluate" />
       <item itemvalue="Python.baseline3" />
       <item itemvalue="Python.baseline1" />
       <item itemvalue="Python.evaluate (1)" />
+      <item itemvalue="Python.baseline1 (1)" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.baseline1 (1)" />
+        <item itemvalue="Python.baseline1" />
         <item itemvalue="Python.evaluate (1)" />
         <item itemvalue="Python.baseline3" />
         <item itemvalue="Python.baseline2" />
-        <item itemvalue="Python.baseline1" />
-        <item itemvalue="Python.evaluate" />
       </list>
     </recent_temporary>
   </component>
@@ -373,10 +351,11 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="1680" height="943" extended-state="6" />
+    <frame x="0" y="0" width="1680" height="1050" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="Favorites" order="0" side_tool="true" />
-      <window_info active="true" content_ui="combo" id="Project" order="1" visible="true" weight="0.25274727" />
+      <window_info active="true" content_ui="combo" id="Project" order="1" visible="true" weight="0.25579977" />
       <window_info id="Structure" order="2" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Database Changes" order="0" show_stripe_button="false" />
       <window_info anchor="bottom" id="Terminal" order="1" />
@@ -385,8 +364,8 @@
       <window_info anchor="bottom" id="Python Console" order="4" />
       <window_info anchor="bottom" id="Docker" order="5" show_stripe_button="false" />
       <window_info anchor="bottom" id="Message" order="6" />
-      <window_info anchor="bottom" id="Find" order="7" />
-      <window_info anchor="bottom" id="Run" order="8" weight="0.32902467" />
+      <window_info anchor="bottom" id="Find" order="7" weight="0.32959184" />
+      <window_info anchor="bottom" id="Run" order="8" visible="true" weight="0.32857144" />
       <window_info anchor="bottom" id="Debug" order="9" weight="0.39952996" />
       <window_info anchor="bottom" id="Cvs" order="10" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="11" weight="0.4" />
@@ -432,13 +411,6 @@
     <entry file="file://$PROJECT_DIR$/output/output_baseline3.csv">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/output/output_baseline1.csv">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="15" column="26" lean-forward="true" selection-start-line="15" selection-start-column="26" selection-end-line="15" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/output/output_baseline2.csv">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-28551">
@@ -455,18 +427,17 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/baseline3.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1785">
+        <state relative-caret-position="903">
           <caret line="125" column="49" selection-start-line="125" selection-start-column="49" selection-end-line="125" selection-end-column="49" />
           <folding>
             <element signature="e#0#19#0" expanded="true" />
-            <marker date="1543897629226" expanded="true" signature="417:1846" ph="..." />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/baseline2.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1335">
+        <state relative-caret-position="903">
           <caret line="92" column="44" selection-start-line="92" selection-start-column="44" selection-end-line="92" selection-end-column="44" />
           <folding>
             <element signature="e#0#19#0" expanded="true" />
@@ -474,22 +445,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/baseline1.py">
+    <entry file="file://$PROJECT_DIR$/TAT.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="645">
-          <caret line="45" column="16" selection-start-line="45" selection-start-column="16" selection-end-line="45" selection-end-column="16" />
+        <state>
           <folding>
-            <element signature="e#0#11#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/data/evaluate.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1440">
-          <caret line="98" column="83" selection-start-line="98" selection-start-column="83" selection-end-line="98" selection-end-column="83" />
-          <folding>
-            <element signature="e#0#11#0" expanded="true" />
+            <element signature="e#0#34#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -497,10 +457,33 @@
     <entry file="file://$PROJECT_DIR$/prep.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="660">
-          <caret line="46" column="40" selection-start-line="46" selection-start-column="40" selection-end-line="46" selection-end-column="40" />
+          <caret line="48" column="40" selection-start-line="48" selection-start-column="40" selection-end-line="48" selection-end-column="40" />
           <folding>
             <element signature="e#0#11#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/orz.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="e#0#34#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/baseline1.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="11" lean-forward="true" selection-start-column="11" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data/evaluate.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1455">
+          <caret line="99" column="83" selection-start-line="99" selection-start-column="83" selection-end-line="99" selection-end-column="83" />
         </state>
       </provider>
     </entry>
@@ -508,6 +491,46 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="156">
           <caret column="10163" selection-start-column="10139" selection-end-column="10163" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data/test.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-355877" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/output/output_baseline1.csv">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="691">
+          <caret line="1136" column="26" selection-start-line="1136" selection-start-column="26" selection-end-line="1136" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/baselines/prep.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="e#0#11#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/baselines/prep_NER.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="e#0#11#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/baselines/baseline1.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="405">
+          <caret line="27" column="27" lean-forward="true" selection-start-line="27" selection-start-column="27" selection-end-line="27" selection-end-column="27" />
+          <folding>
+            <element signature="e#0#11#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
