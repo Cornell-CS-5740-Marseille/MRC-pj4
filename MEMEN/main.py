@@ -249,9 +249,9 @@ def evaluate(development_file):
                         true_negatives += 1
                     elif answerable == 1 and question.possible == 1:
                         true_positives += 1
-                    elif answerable == 0 and question.possible == 1:
+                    elif question.possible == 0 and answerable == 1:
                         false_positives += 1
-                    elif answerable == 1 and question.possible == 0:
+                    elif question.possible == 1 and answerable == 0:
                         false_negatives += 1
                     index += 1
 
