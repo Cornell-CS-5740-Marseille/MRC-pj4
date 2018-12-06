@@ -50,6 +50,14 @@ python baseline1.py
 ```
 python baseline2.py
 ```
+- run the third baseline model.
+```
+python baseline3.py
+```
+- run the forth baseline model.
+```
+python baseline4.py
+```
 ### Final Systems
 You are able to train and evaluate the networks by commenting and uncommenting the code in `main.py`.
 
@@ -64,7 +72,7 @@ python main.py
 
 ## Authors
 
-* **Jialu Li** - *Baseline & Documents* - jl3855@cornell.edu
+* **Jialu Li** - *Baseline Systems* - jl3855@cornell.edu
 * **Charlie Wang** - *Baseline Systems* - qw248@cornell.edu
 * **Ziyun Wei** - *Final Systems* - zw555@cornell.edu
 
